@@ -157,6 +157,18 @@
             allEvents = allEvents.filter(e => e.id !== info.event.id);
           }
         },
+        eventDrop: function(info) {
+          allEvents = allEvents.map(e => {
+            if (e.id === info.event.id) {
+              return {
+                ...e,
+                start: info.event.startStr,
+                end: info.event.end ? new Date(new Date(info.event.endStr).getTime() - 86400000).toISOString().split('T')[0] : info.event.startStr,
+              };
+            }
+            return e;
+          });
+        },
       });
       calendar.render();
     });
